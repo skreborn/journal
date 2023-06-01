@@ -1,0 +1,14 @@
+name: journal_example
+description: An example for `journal`.
+publish_to: none
+
+environment:
+  sdk: ^3.2.0
+
+dependencies:
+  journal:
+    path: ..
+  source_maps: ^0.10.10
+
+dev_dependencies:
+  lints: ^3.0.0

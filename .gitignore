@@ -1,0 +1,9 @@
+# Dart tooling
+.dart_tool
+/pubspec.lock
+
+# Documentation
+doc/api
+
+# Flutter Version Manager
+.fvm/flutter_sdk

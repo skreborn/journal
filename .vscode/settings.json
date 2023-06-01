@@ -1,0 +1,6 @@
+{
+  "editor.rulers": [100],
+  "dart.lineLength": 100,
+  "dart.sdkPath": ".fvm/flutter_sdk/bin/cache/dart-sdk",
+  "dart.runPubGetOnPubspecChanges": "never",
+}
