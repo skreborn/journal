@@ -6,6 +6,7 @@ import 'package:logging/logging.dart' as logging;
 import 'package:meta/meta.dart';
 
 /// A single log entry.
+@immutable
 final class JournalEntry {
   /// Time of creation.
   @useResult

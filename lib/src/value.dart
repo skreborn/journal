@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 typedef JournalValueEntry = MapEntry<String, JournalValue?>;
 
 /// A value to be used in a [JournalEntry].
+@immutable
 sealed class JournalValue {
   const JournalValue();
 
