@@ -34,5 +34,5 @@ void main() async {
     } on FormatException catch (ex, trace) {
       journal.error('Caught an error.', values: {'error': ex.toString().toJournal}, trace: trace);
     }
-  }, zoneValues: const {#journalName: 'error-zone'});
+  }, zoneValues: const {zoneNameKey: 'error-zone'});
 }

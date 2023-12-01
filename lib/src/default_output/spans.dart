@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'dart:async';
-import 'dart:math' as math;
-
+import 'package:journal/developer.dart';
 import 'package:journal/src/entry.dart';
 import 'package:journal/src/level.dart';
 import 'package:meta/meta.dart';
@@ -66,13 +64,7 @@ List<Span> formatMessage(
       Span.level(entry.level),
       const SpacingSpan(),
     ],
-    if (displayZone)
-      if (zone == Zone.root)
-        const Span.text('root')
-      else if (zone == null)
-        const Span.text('<unspecified>')
-      else
-        Span.text(zone[#journalName]?.toString() ?? '<unknown>'),
+    if (displayZone) Span.text(zone.name),
     if (displayZone && displayName) const Span.text('/'),
     if (displayName) Span.text('$name:', isBold: true),
     if (displayZone || displayName) const SpacingSpan(),
@@ -86,19 +78,15 @@ List<Span> formatMessage(
 }
 
 List<List<Span>> formatTrace(Trace trace) {
-  final longest = trace.frames.map((frame) => frame.location.length).fold(0, math.max);
-
-  return trace.frames.map((frame) {
-    final location = frame.location.padRight(longest);
-
+  return trace.alignedFrames.map((frame) {
     return [
       const Span.text('at', isDim: true),
       const SpacingSpan(),
-      Span.text(location),
+      Span.text(frame.location),
       const SpacingSpan(),
       const Span.text('in', isDim: true),
       const SpacingSpan(),
-      Span.text(frame.member ?? '<unknown>', isBold: true),
+      Span.text(frame.member, isBold: true),
     ];
   }).toList();
 }

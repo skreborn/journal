@@ -16,17 +16,12 @@ final class DefaultJournalOutput implements JournalOutput {
 
   /// Whether to display [JournalEntry.zone] in the output.
   ///
-  /// Dart doesn't give zones names by default, so the only possible values out of the box are
-  /// `"root"` for `Zone.root` and `"<unknown>"` for all others.
-  ///
-  /// To display a meaningful name for your zones, make sure that they have a [String] value set for
-  /// `#journalName`.
+  /// Dart doesn't give zones names by default. To display a meaningful name for your zones, make
+  /// sure that they have a value for [zoneNameKey].
   ///
   /// ``` dart
-  /// runZoned(() { /* ... */ }, zoneValues: const {#journalName: 'some-zone-name'});
+  /// runZoned(() {}, zoneValues: const {zoneNameKey: 'some-name'});
   /// ```
-  ///
-  /// If a [JournalEntry] has no zone specified, `"<unspecified>"` will be printed.
   final bool displayZone;
 
   /// Whether to display [Journal.name] in the output.

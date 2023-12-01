@@ -28,3 +28,5 @@ export 'src/journal.dart';
 export 'src/level.dart';
 export 'src/output.dart';
 export 'src/value.dart';
+
+const zoneNameKey = #_journalZoneName;
