@@ -24,15 +24,21 @@ void writeImpl(
       case SpacingSpan():
         return ' ';
       case LevelSpan(:final level):
-        final color = switch (level) {
-          JournalEntryLevel.error => 31,
-          JournalEntryLevel.warn => 33,
-          JournalEntryLevel.info => 32,
-          JournalEntryLevel.debug => 34,
-          JournalEntryLevel.trace => 35,
-        };
+        final name = level.name.toUpperCase().padLeft(5);
 
-        return '\x1b[${color}m${level.name.toUpperCase().padLeft(5)}\x1b[0m';
+        if (io.stdout.supportsAnsiEscapes || Journal.forceFormatTerminalOutput) {
+          final color = switch (level) {
+            JournalEntryLevel.error => 31,
+            JournalEntryLevel.warn => 33,
+            JournalEntryLevel.info => 32,
+            JournalEntryLevel.debug => 34,
+            JournalEntryLevel.trace => 35,
+          };
+
+          return '\x1b[${color}m$name\x1b[0m';
+        }
+
+        return name;
       case TextSpan(:final text, :final isBold, :final isDim, :final isEmphasized):
         if (io.stdout.supportsAnsiEscapes || Journal.forceFormatTerminalOutput) {
           final codes = [
