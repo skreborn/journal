@@ -1,5 +1,4 @@
 import 'package:journal/src/entry.dart';
-import 'package:journal/src/journal.dart';
 import 'package:journal/src/output.dart';
 import 'package:meta/meta.dart';
 

@@ -1,4 +1,3 @@
-import 'package:journal/src/entry.dart';
 import 'package:meta/meta.dart';
 
 /// A [MapEntry] of [String] and optional [JournalValue] pairs.

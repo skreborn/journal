@@ -22,8 +22,6 @@
 /// ```
 library journal;
 
-import 'package:journal/src/journal.dart';
-
 export 'src/default_output/default_output.dart';
 export 'src/entry.dart';
 export 'src/journal.dart';

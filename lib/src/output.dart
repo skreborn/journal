@@ -1,6 +1,4 @@
-import 'package:journal/src/default_output/default_output.dart';
 import 'package:journal/src/entry.dart';
-import 'package:journal/src/journal.dart';
 
 /// Interface for [Journal] outputs.
 ///

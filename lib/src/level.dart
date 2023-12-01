@@ -1,4 +1,3 @@
-import 'package:journal/src/entry.dart';
 import 'package:logging/logging.dart' as logging;
 import 'package:meta/meta.dart';
 

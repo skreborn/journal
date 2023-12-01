@@ -14,7 +14,6 @@ linter:
     - avoid_type_to_string
     - cancel_subscriptions
     - close_sinks
-    - comment_references
     - deprecated_member_use_from_same_package
     - discarded_futures
     - literal_only_boolean_expressions
