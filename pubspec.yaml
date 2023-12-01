@@ -1,7 +1,7 @@
 name: journal
 description: A simple log writer and subscriber usable both from libraries and applications.
 repository: https://github.com/skreborn/journal
-version: 0.1.0+1
+version: 0.2.0
 
 environment:
   sdk: ^3.0.0
