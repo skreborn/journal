@@ -1,15 +1,12 @@
 import 'dart:async';
 
 import 'package:journal/journal.dart';
-import 'package:journal_example/source_maps/source_maps.dart';
 
 void main() async {
   Journal.minimumLevel = JournalEntryLevel.trace;
   Journal.autoCaptureZones = true;
   Journal.forceFormatTerminalOutput = true;
   Journal.outputs = const [DefaultJournalOutput(displayZone: true)];
-
-  await loadSourceMaps();
 
   const journal = Journal('example');
 

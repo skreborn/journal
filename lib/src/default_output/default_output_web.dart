@@ -6,10 +6,8 @@ import 'dart:js_interop_unsafe';
 
 import 'package:journal/src/default_output/spans.dart';
 import 'package:journal/src/entry.dart';
-import 'package:journal/src/journal.dart';
 import 'package:journal/src/level.dart';
 import 'package:journal/src/value.dart';
-import 'package:source_map_stack_trace/source_map_stack_trace.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 @JS('Window')
@@ -145,24 +143,9 @@ void writeImpl(
     }
 
     if (displayTrace && trace != null) {
-      StackTrace tryMap(StackTrace trace) {
-        final settings = Journal.sourceMapSettings;
-
-        if (settings != null) {
-          return mapStackTrace(
-            settings.mapping,
-            trace,
-            packageMap: {for (final entry in settings.prefixes.entries) entry.value: entry.key},
-            sdkRoot: Uri.parse('org-dartlang-sdk://'),
-          );
-        }
-
-        return trace;
-      }
-
       _console.groupCollapsed('Stack trace'.toJS);
 
-      final formatted = formatTrace(Trace.from(tryMap(trace)).terse);
+      final formatted = formatTrace(Trace.from(trace).terse);
 
       _console.callMethodVarArgs('log'.toJS, [
         formatted.map((line) => line.map(createFormat).join('')).join('\n').toJS,

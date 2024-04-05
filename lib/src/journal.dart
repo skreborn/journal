@@ -6,30 +6,11 @@ import 'package:journal/src/level.dart';
 import 'package:journal/src/output.dart';
 import 'package:journal/src/value.dart';
 import 'package:meta/meta.dart';
-import 'package:source_maps/source_maps.dart';
 
 var _minimumLevel = JournalEntryLevel.info;
 var _autoCaptureZones = true;
 var _forceFormatTerminalOutput = false;
 var _outputs = const <JournalOutput>[DefaultJournalOutput()];
-
-JournalSourceMapSettings? _sourceMapSettings;
-
-/// Source map settings for [Journal].
-@immutable
-final class JournalSourceMapSettings {
-  /// The mapping created from a source map.
-  final Mapping mapping;
-
-  /// The prefix mapping associating URI prefixes with package names.
-  final Map<Uri, String> prefixes;
-
-  /// Creates a new [JournalSourceMapSettings] with the specified [mapping] and [prefixes].
-  const JournalSourceMapSettings({
-    required this.mapping,
-    this.prefixes = const {},
-  });
-}
 
 /// A named log writer.
 @immutable
@@ -80,14 +61,6 @@ final class Journal {
   static Iterable<JournalOutput> get outputs => _outputs;
 
   static set outputs(Iterable<JournalOutput> value) => _outputs = value.toList(growable: false);
-
-  /// The source map settings associated with the application.
-  ///
-  /// Used to clean up the stack traces for web builds.
-  @useResult
-  static JournalSourceMapSettings? get sourceMapSettings => _sourceMapSettings;
-
-  static set sourceMapSettings(JournalSourceMapSettings? value) => _sourceMapSettings = value;
 
   /// Records [entry] with the given [name].
   ///

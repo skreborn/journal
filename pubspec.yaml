@@ -8,11 +8,8 @@ environment:
 
 dependencies:
   ffi: ^2.1.0
-  js: ^0.6.5
   logging: ^1.0.0
   meta: ^1.9.1
-  source_map_stack_trace: ^2.1.0
-  source_maps: ^0.10.10
   stack_trace: ^1.10.0
 
 dev_dependencies:
