@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs
 
-import 'dart:html';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
@@ -9,33 +8,12 @@ import 'package:journal/src/entry.dart';
 import 'package:journal/src/level.dart';
 import 'package:journal/src/value.dart';
 import 'package:stack_trace/stack_trace.dart';
+import 'package:web/web.dart';
 
-@JS('Window')
-@staticInterop
-class _Window implements JSObject {}
-
-extension on _Window {
-  external _Console get console;
+extension on $Console {
+  @JS('log')
+  external void logWithMessage(JSString message, [JSAny? value]);
 }
-
-@JS('Console')
-@staticInterop
-class _Console implements JSObject {}
-
-extension on _Console {
-  external void log(JSString message, [JSAny? value]);
-  external void groupCollapsed(JSString label);
-  external void groupEnd();
-}
-
-@JS()
-@anonymous
-@staticInterop
-class _Entries implements JSObject {
-  external factory _Entries();
-}
-
-final _console = (window as _Window).console;
 
 void writeImpl(
   String name,
@@ -74,7 +52,7 @@ void writeImpl(
 
         return array;
       case EntriesJournalValue(:final inner):
-        final entries = _Entries();
+        final entries = JSObject();
 
         for (final entry in inner) {
           entries.setProperty(entry.key.toJS, toJs(entry.value));
@@ -132,29 +110,29 @@ void writeImpl(
     displayName: displayName,
   );
 
-  _console.callMethodVarArgs(hasDetails ? 'groupCollapsed'.toJS : 'log'.toJS, [
+  console.callMethodVarArgs(hasDetails ? 'groupCollapsed'.toJS : 'log'.toJS, [
     message.map(createFormat).join().toJS,
     ...message.expand(createArguments).map((arg) => arg.toJS),
   ]);
 
   if (hasDetails) {
     if (entry.values.isNotEmpty) {
-      _console.log('Values:'.toJS, toJs(entry.values.toJournal));
+      console.logWithMessage('Values:'.toJS, toJs(entry.values.toJournal));
     }
 
     if (displayTrace && trace != null) {
-      _console.groupCollapsed('Stack trace'.toJS);
+      console.groupCollapsed('Stack trace'.toJS);
 
       final formatted = formatTrace(Trace.from(trace).terse);
 
-      _console.callMethodVarArgs('log'.toJS, [
+      console.callMethodVarArgs('log'.toJS, [
         formatted.map((line) => line.map(createFormat).join('')).join('\n').toJS,
         ...formatted.expand((line) => line.expand(createArguments)).map((arg) => arg.toJS),
       ]);
 
-      _console.groupEnd();
+      console.groupEnd();
     }
 
-    _console.groupEnd();
+    console.groupEnd();
   }
 }
