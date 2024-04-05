@@ -1,3 +1,8 @@
+## 0.3.0
+
+- **\[BREAKING\]** require Dart 3.3.
+- **\[BREAKING\]** remove source map support.
+
 ## 0.2.0
 
 - **\[BREAKING\]** use the constant symbol `journalZoneName` instead of the literal `#journalName`
