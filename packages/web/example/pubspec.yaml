@@ -1,0 +1,13 @@
+name: journal_web_example
+description: "An example for `journal_web`."
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+resolution: workspace
+
+dependencies:
+  journal: ^0.4.0
+  journal_example:
+  journal_web: ^0.1.0

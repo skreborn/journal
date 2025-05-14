@@ -1,10 +1,17 @@
 # Journal
 
-A simple log writer and subscriber usable both from libraries and applications.
+A simple log recorder usable both from libraries and applications.
 
-## Example
+Published to [the pub.dev package registry][registry].
 
-To create a journal, simply instantiate `Journal` with a unique name, normally the name of the
+[registry]: https://pub.dev/packages/journal
+
+## Usage from both libraries and applications
+
+As a library developer, you don't need to be concerned with where the logs will end up. If you're
+developing an application, make sure also read [Usage from applications](#usage-from-applications).
+
+To create a journal, simply instantiate `Journal` with a unique name - normally the name of the
 package that emits the entries.
 
 ```dart
@@ -23,65 +30,77 @@ if (address.isUnbound) {
 }
 ```
 
-## Default output
+## Usage from applications
 
-The default output uses a pretty-printed format on all supported platforms.
+As an application developer, it's your responsibility to configure the global `Journal`.
 
-_Note that you might need to set `Journal.forceFormatTerminalOutput` to get properly formatted
-output in your terminal._
+### Setting up outputs
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/skreborn/journal/master/assets/terminal.png" style="max-width: 100%">
-  <br>
-  <em>Default output in Windows Terminal</em>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/skreborn/journal/master/assets/web-firefox.png" style="max-width: 100%">
-  <br>
-  <em>Default output in Mozilla Firefox</em>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/skreborn/journal/master/assets/web-chrome.png" style="max-width: 100%">
-  <br>
-  <em>Default output in Google Chrome</em>
-</p>
-
-## Configuration
-
-To configure `journal`, you can either implement your own `JournalOutput` or override the parameters
-of the default one.
+To make use of `journal` in an application, at least one output should be configured.
+See [First party outputs](#first-party-outputs) for some options.
 
 ```dart
-Journal.outputs = const [
-  DefaultJournalOutput(
-    displayTimestamp: true,
-    displayLevel: true,
-    displayZone: false,
-    displayName: true,
-    displayTrace: true,
-  ),
-];
+import 'package:journal_stdio/journal_stdio.dart';
+
+Journal.outputs = const [StdioOutput()];
 ```
 
-## Compatibility
+<p align="center">
+  <a target="_blank" rel="noopener noreferrer" href="https://asciinema.org/a/yssRVNfkYQUigFvYUQkJ2YNI5">
+    <img alt="Default standard IO output" src="https://asciinema.org/a/yssRVNfkYQUigFvYUQkJ2YNI5.svg" style="max-width: 100%;">
+  </a>
+</p>
 
-For compatibility with the `logging` package, simply direct its records to `journal`.
+### Additional context
+
+Context may be added to a `Journal` instance using `withContext`.
 
 ```dart
-import 'package:logging/logging.dart'
-
-Logger.root.onRecord.listen((record) {
-  Journal.record(
-    record.loggerName,
-    JournalEntry.fromLogging(record),
-  );
-});
+journal.withContext(
+  Context.trace('connection', {'client': client.address.toString().toJournal}),
+  (journal) => journal.debug('Client connected.'),
+);
 ```
+
+### Filtering output
+
+Filtering is useful when you don't necessarily want to display all logs.
+By default, no filtering is applied.
+
+Filtering applies to both contexts and entries separately:
+
+- When using `withContext`, the `Context` will only be applied if the filter allows it based on its
+  `name` and `level`.
+- When using `log` (or any of its wrappers), it will only be forwarded to the configured outputs if
+  the filter allows it based on the `name` of the `Journal` used and the `level` specified.
+
+`journal` comes with a built-in filter generator function called `levelFilter` that allows you to
+set up a simple filter.
+
+```dart
+Journal.filter = levelFilter(Level.info);
+```
+
+## First party outputs
+
+`journal` has a few officially supported outputs:
+
+- [`journal_android`]: an output targeting Android devices.
+- [`journal_stdio`]: an output targeting standard IO.
+- [`journal_web`]: an output targeting Javascript environments.
+
+[`journal_android`]: https://pub.dev/packages/journal_android
+[`journal_stdio`]: https://pub.dev/packages/journal_stdio
+[`journal_web`]: https://pub.dev/packages/journal_web
+
+## Compatibility with `logging`
+
+`journal` provides a compatibility adapter usable with `logging`.
+See the [`journal_logging`] package if any of your dependencies are using `logging` or you're
+gradually migrating your own logs.
+
+[`journal_logging`]: https://pub.dev/packages/journal_logging
 
 ## Release history
 
-See the [changelog] for a detailed list of changes throughout the package's history.
-
-[changelog]: https://github.com/skreborn/journal/blob/master/CHANGELOG.md
+See the [changelog](CHANGELOG.md) for a detailed list of changes throughout the package's history.

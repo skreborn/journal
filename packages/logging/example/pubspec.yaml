@@ -1,0 +1,14 @@
+name: journal_logging_example
+description: "An example for `journal_logging`."
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+resolution: workspace
+
+dependencies:
+  journal: ^0.4.0
+  journal_logging: ^0.1.0
+  journal_stdio: ^0.1.0
+  logging: ^1.0.0

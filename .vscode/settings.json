@@ -3,4 +3,5 @@
   "dart.lineLength": 100,
   "dart.sdkPath": ".fvm/flutter_sdk/bin/cache/dart-sdk",
   "dart.runPubGetOnPubspecChanges": "never",
+  "markdownlint.config": { "MD033": false },
 }

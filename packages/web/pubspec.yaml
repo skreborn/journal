@@ -1,0 +1,20 @@
+name: journal_web
+description: "An output targeting Javascript environments for `journal`."
+repository: https://github.com/skreborn/journal
+version: 0.1.0
+
+topics:
+  - journal
+  - javascript
+  - web
+  - browser
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  journal: ^0.4.0
+  stack_trace: ^1.10.0
+  web: ^1.0.0
