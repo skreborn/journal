@@ -1,0 +1,13 @@
+name: journal_stdio_example
+description: "An example for `journal_stdio`."
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+resolution: workspace
+
+dependencies:
+  journal: ^0.4.0
+  journal_example:
+  journal_stdio: ^0.1.0

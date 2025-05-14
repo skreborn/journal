@@ -1,17 +1,31 @@
 name: journal
-description: A simple log writer and subscriber usable both from libraries and applications.
+description: "A simple log recorder usable both from libraries and applications."
 repository: https://github.com/skreborn/journal
-version: 0.3.0
+version: 0.4.0
+
+topics:
+  - dart
+  - utility
+  - logging
+  - cli
+
+workspace:
+  - example
+  - packages/android
+  - packages/android/example
+  - packages/logging
+  - packages/logging/example
+  - packages/stdio
+  - packages/stdio/example
+  - packages/web
+  - packages/web/example
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.7.0
 
 dependencies:
-  ffi: ^2.1.0
-  logging: ^1.0.0
   meta: ^1.9.1
   stack_trace: ^1.10.0
-  web: ^0.5.0
 
 dev_dependencies:
-  lints: ^3.0.0
+  very_good_analysis: ^7.0.0

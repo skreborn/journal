@@ -1,0 +1,18 @@
+name: journal_android_example
+description: "An example for `journal_android`."
+publish_to: none
+
+environment:
+  sdk: ^3.7.0
+
+resolution: workspace
+
+flutter:
+  uses-material-design: true
+
+dependencies:
+  flutter:
+    sdk: flutter
+  journal: ^0.4.0
+  journal_android: ^0.1.0
+  journal_example:

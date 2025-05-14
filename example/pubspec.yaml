@@ -1,13 +1,12 @@
 name: journal_example
-description: An example for `journal`.
+description: "An example for `journal`."
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.7.0
+
+resolution: workspace
 
 dependencies:
-  journal:
-    path: ..
-
-dev_dependencies:
-  lints: ^3.0.0
+  journal: ^0.4.0
+  journal_stdio: ^0.1.0

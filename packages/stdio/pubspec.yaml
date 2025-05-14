@@ -1,0 +1,21 @@
+name: journal_stdio
+description: "An output targeting standard IO for `journal`."
+repository: https://github.com/skreborn/journal
+version: 0.1.0
+
+topics:
+  - journal
+  - cli
+  - console
+  - terminal
+  - server
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  journal: ^0.4.0
+  meta: ^1.9.1
+  stack_trace: ^1.10.0

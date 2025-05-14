@@ -1,80 +1,57 @@
-import 'dart:async';
-
+import 'package:journal/src/journal.dart';
 import 'package:journal/src/level.dart';
 import 'package:journal/src/value.dart';
-import 'package:logging/logging.dart' as logging;
 import 'package:meta/meta.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 /// A single log entry.
 @immutable
-final class JournalEntry {
+final class Entry {
+  /// Name of the [Journal] used to record `this`.
+  final String name;
+
   /// Time of creation.
-  @useResult
   final DateTime time;
 
-  /// The category and granularity.
-  @useResult
-  final JournalEntryLevel level;
+  /// Category and granularity.
+  final Level level;
 
-  /// The originating zone, if known.
-  @useResult
-  final Zone? zone;
+  /// Additional context, if any.
+  final List<Context> context;
 
-  /// The plain-text description.
-  @useResult
+  /// Plain-text description.
   final String message;
 
-  /// Additional values
-  @useResult
-  final Map<String, JournalValue?> values;
+  /// Additional values.
+  final Map<String, Value?> values;
 
-  /// The captured stack trace, if any.
-  @useResult
-  final StackTrace? trace;
+  /// Captured stack trace, if any.
+  final Trace? trace;
 
-  /// Creates a new [JournalEntry] at [time] and [level] with the specified [message].
-  const JournalEntry({
+  /// Creates a new [Entry] at [time] and [level] with [message].
+  const Entry({
+    required this.name,
     required this.time,
     required this.level,
-    this.zone,
+    required this.context,
     required this.message,
     required this.values,
     this.trace,
   });
 
-  /// Creates a [JournalEntry] from a [`logging`] library compatible [record].
-  ///
-  /// [`logging`]: https://pub.dev/packages/logging
-  factory JournalEntry.fromLogging(logging.LogRecord record) {
-    final values = switch (record.object) {
-      null => const <String, JournalValue>{},
-      final Map<Object?, Object?> map => map.map((key, value) {
-          return MapEntry(key.toString(), value != null ? JournalValue.from(value) : null);
-        }),
-      final other => {'_object': JournalValue.from(other)},
-    };
-
-    final error = record.error;
-
-    return JournalEntry(
-      time: record.time,
-      level: JournalEntryLevel.fromLogging(record.level),
-      zone: record.zone,
-      message: record.message,
-      values: {...values, if (error != null) '_error': JournalValue.from(error)},
-      trace: record.stackTrace,
-    );
-  }
-
   /// Returns the [String] representation of `this`.
   @override
-  @useResult
   String toString() {
-    return [
-      time.toIso8601String(),
-      level.name,
-      message,
-      for (final entry in values.entries) '${entry.key}=${entry.value}',
-    ].join(' ');
+    final props = {
+      'name': name,
+      'time': time.toIso8601String(),
+      'level': level.name,
+      'context': context.toString(),
+      'message': message,
+      'values': values.toString(),
+      'trace': trace?.frames.toString(),
+    }.entries.map((prop) => '${prop.key}: ${prop.value ?? 'n/a'}').join(', ');
+
+    return 'Entry($props)';
   }
 }

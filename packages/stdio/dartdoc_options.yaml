@@ -1,0 +1,5 @@
+dartdoc:
+  favicon: ../../doc/favicon.ico
+  linkToSource:
+    root: .
+    uriTemplate: https://github.com/skreborn/journal/blob/stdio-v0.1.0/packages/stdio/%f%#L%l%

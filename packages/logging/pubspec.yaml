@@ -1,0 +1,18 @@
+name: journal_logging
+description: "`logging` compatibility adapter for `journal`."
+repository: https://github.com/skreborn/journal
+version: 0.1.0
+
+topics:
+  - journal
+  - logging
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  journal: ^0.4.0
+  logging: ^1.0.0
+  stack_trace: ^1.10.0
